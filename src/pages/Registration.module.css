@@ -1,4 +1,19 @@
+.card {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
 .buttons {
   display: flex;
-  justify-content: space-around;
+  gap: 8px;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.button_confirm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }

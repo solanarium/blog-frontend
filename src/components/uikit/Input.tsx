@@ -4,14 +4,18 @@ import { classNames } from '../../heplers/classNames'
 import styles from './Input.module.css'
 
 type Props = {
-  text: string
+  label: string
 } & ComponentProps<'input'>
 
-export const Input: FC<Props> = ({ className, text, ...rest }) => {
+export const Input: FC<Props> = ({ className, label, ...rest }) => {
   return (
-    <div className={styles.container}>
-      <p className={styles.text}>{text}</p>
-      <input className={classNames(styles.input, className)} {...rest} />
+    <div>
+      <p className={styles.text}>{label}</p>
+      <input
+        className={classNames(styles.input, className)}
+        placeholder={label}
+        {...rest}
+      />
     </div>
   )
 }

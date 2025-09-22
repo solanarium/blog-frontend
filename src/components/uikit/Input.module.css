@@ -2,4 +2,19 @@
   width: 100%;
   border-radius: 8px;
   padding: 4px 8px;
+  background-color: var(--gray-400);
+  color: var(--black);
+  border: none;
+}
+
+.text {
+  color: var(--gray-400);
+}
+
+input:focus {
+  outline: none;
+}
+
+input:focus-visible {
+  outline: 2px solid var(--white);
 }

@@ -4,8 +4,9 @@
 }
 
 .title {
-  color: #fff;
+  color: var(--white);
   text-align: center;
+  font-size: large;
 }
 
 .registration_card {
@@ -18,5 +19,5 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  color: #777;
+  color: var(--grey-900);
 }

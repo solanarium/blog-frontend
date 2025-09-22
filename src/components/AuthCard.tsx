@@ -6,11 +6,11 @@ type Props = {
   title: string
 } & ComponentProps<'div'>
 
-export const AuthCard: FC<Props> = ({ title, children, ...rest }) => {
+export const AuthCard: FC<Props> = ({ title, children }) => {
   return (
-    <div className={styles.container} {...rest}>
+    <div className={styles.container}>
       <div className={styles.registration_card}>
-        <h4 className={styles.title}>{title}</h4>
+        <p className={styles.title}>{title}</p>
         {children}
       </div>
     </div>
