@@ -1,0 +1,6 @@
+.container {
+  padding: 0 24px;
+  background: #141e30;
+  background: linear-gradient(to right, #243855, #141e30);
+  height: 100vh;
+}

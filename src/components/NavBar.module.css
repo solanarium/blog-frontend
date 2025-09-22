@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+
+.list_container {
+  list-style-type: none;
+  display: flex;
+  gap: 24px;
+  background: none;
+}
+
+.link {
+  background: none;
+  color: #777;
+  text-decoration: none;
+  transition: color 0.2s linear;
+}
+
+.link:hover {
+  color: #fff;
+}
+
+.home {
+  background-color: #777;
+  border: none;
+  color: #fff;
+  padding: 4px 12px;
+  cursor: pointer;
+}
