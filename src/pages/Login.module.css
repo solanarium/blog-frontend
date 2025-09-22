@@ -1,19 +1,19 @@
-.title {
-  color: #fff;
-  text-align: center;
-}
-
-.login_card {
-  height: 280px;
-  width: 320px;
-  margin: auto;
+.card {
   display: flex;
+  gap: 8px;
   flex-direction: column;
-  gap: 12px;
-  color: #777;
 }
 
 .buttons {
   display: flex;
-  justify-content: space-around;
+  gap: 8px;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.login_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }

@@ -1,10 +1,14 @@
 import type { FC } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
+import { logOut } from '../redux/features/auth/authSlice'
+import { useDispatch } from '../redux/store'
 import styles from './NavBar.module.css'
 import { Button } from './uikit/Button'
 
 export const NavBar: FC = () => {
+  const dispatch = useDispatch()
+
   return (
     <div>
       <div className={styles.container}>
@@ -26,9 +30,9 @@ export const NavBar: FC = () => {
             </a>
           </li>
         </ul>
-        <Link to="/login">
-          <Button variant="primary"> Log in</Button>
-        </Link>
+        <Button onClick={() => dispatch(logOut())} variant="primary">
+          Log Out
+        </Button>
       </div>
       <Outlet />
     </div>
