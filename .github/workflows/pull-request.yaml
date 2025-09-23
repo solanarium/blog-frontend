@@ -82,7 +82,7 @@ jobs:
         run: pnpm install
 
       - name: Run unit tests
-        run: pnpm test -t 'Integration' --coverage --coverageDirectory=coverage/inegration
+        run: pnpm test -t 'Integration' --coverage --coverageDirectory=coverage/integration
 
       - name: Upload coverage artifacts
         if: ${{ !cancelled() }}
