@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "concurrently \"eslint .\" \"stylelint \\\"src/**/*.css\\\" --config stylelint.config.js\"",
     "lint:fix": "concurrently \"eslint . --fix\" \"stylelint \\\"src/**/*.css\\\" --config stylelint.config.js --fix\"",
+    "tsc": "tsc",
     "preview": "vite preview",
     "test": "jest",
     "test:dev": "jest --watch"
