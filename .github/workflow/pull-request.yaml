@@ -25,7 +25,7 @@ jobs:
         run: pnpm install
 
       - name: Run Linter and type checking
-        run: bun run lint
+        run: pnpm run lint
 
   Vercel-Deploy:
     runs-on: ubuntu-latest
