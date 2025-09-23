@@ -2,9 +2,11 @@ import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import styles from './App.module.css'
+import { Background } from './components/Background'
 import { Container } from './components/Container'
 import { NavBar } from './components/NavBar'
 import { Loader } from './components/uikit/Loader'
+import { AddPostPage } from './pages/AddPostPage'
 import { Login } from './pages/Login'
 import { MainPage } from './pages/MainPage'
 import { Registration } from './pages/Registration'
@@ -29,7 +31,7 @@ export const App = () => {
   }, [dispatch])
 
   return (
-    <Container>
+    <Background>
       {isLoading ? (
         <Loader size={40} className={styles.loader} />
       ) : (
@@ -43,11 +45,18 @@ export const App = () => {
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route element={<NavBar />}>
-              <Route path={routes.auth.homePage} element={<MainPage />} />
+              <Route element={<Container />}>
+                <Route path={routes.auth.homePage} element={<MainPage />} />
+
+                <Route
+                  path={routes.auth.posts.create}
+                  element={<AddPostPage />}
+                />
+              </Route>
             </Route>
           </Route>
         </Routes>
       )}
-    </Container>
+    </Background>
   )
 }

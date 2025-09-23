@@ -1,0 +1,34 @@
+.input {
+  display: none;
+}
+
+.button_input {
+  width: 100%;
+  padding: 8px 0;
+  color: var(--gray-400);
+  font-size: 18px;
+  background-color: var(--gray-600);
+  border: dotted 3px var(--gray-400);
+  transition: color 0.1s linear, border 0.1s linear;
+  cursor: pointer;
+}
+
+.button_input:hover {
+  color: var(--white);
+  border: dotted 3px var(--white);
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 180px;
+  width: 400px;
+  margin: auto;
+}

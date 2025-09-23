@@ -4,6 +4,7 @@
   padding: 4px 12px;
   cursor: pointer;
   font-size: 14px;
+  text-decoration: none;
 }
 
 .primary {
@@ -13,7 +14,10 @@
 .secondary {
   background-color: transparent;
   transition: background-color 0.2s linear;
-  text-decoration: none;
+}
+
+.cancel {
+  background-color: var(--red);
 }
 
 .secondary:hover {

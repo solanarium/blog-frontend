@@ -1,8 +1,9 @@
 import type { FC } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 import { logOut } from '../redux/features/auth/authSlice'
 import { useDispatch } from '../redux/store'
+import { routes } from '../types/consts'
 import styles from './NavBar.module.css'
 import { Button } from './uikit/Button'
 
@@ -25,9 +26,9 @@ export const NavBar: FC = () => {
             </a>
           </li>
           <li>
-            <a className={styles.link} href="/">
+            <Link to={routes.auth.posts.create} className={styles.link}>
               Add a post
-            </a>
+            </Link>
           </li>
         </ul>
         <Button onClick={() => dispatch(logOut())} variant="primary">

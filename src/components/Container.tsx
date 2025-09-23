@@ -1,16 +1,12 @@
-import type { ComponentProps, FC } from 'react'
+import type { FC } from 'react'
+import { Outlet } from 'react-router-dom'
 
-import { classNames } from '../heplers/classNames'
 import styles from './Container.module.css'
 
-export const Container: FC<ComponentProps<'div'>> = ({
-  children,
-  className,
-  ...rest
-}) => {
+export const Container: FC = () => {
   return (
-    <div className={classNames(styles.container, className)} {...rest}>
-      {children}
+    <div className={styles.container}>
+      <Outlet />
     </div>
   )
 }

@@ -11,11 +11,7 @@ export const Input: FC<Props> = ({ className, label, ...rest }) => {
   return (
     <div>
       <p className={styles.text}>{label}</p>
-      <input
-        className={classNames(styles.input, className)}
-        placeholder={label}
-        {...rest}
-      />
+      <input className={classNames(styles.input, className)} {...rest} />
     </div>
   )
 }
