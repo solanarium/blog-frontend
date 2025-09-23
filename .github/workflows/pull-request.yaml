@@ -1,0 +1,193 @@
+name: Pull Request CI
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  Lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run Lint
+        run: pnpm run lint
+
+      - name: Run type check
+        run: pnpm run tsc --noEmit
+
+  Unit-Tests:
+    needs: [Lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run unit tests
+        run: pnpm test -t 'Unit' --coverage --coverageDirectory=coverage/unit
+
+      - name: Upload coverage artifacts
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-tests-coverage-data
+          path: coverage/unit
+
+  Inegration-Tests:
+    needs: [Lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run unit tests
+        run: pnpm test -t 'Integration' --coverage --coverageDirectory=coverage/integration
+
+      - name: Upload coverage artifacts
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-tests-coverage-data
+          path: coverage/integration
+
+  Vercel-Deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      deployments: write
+    outputs:
+      preview_url: ${{ steps.deploy.outputs.preview_url }}
+    needs: [Lint, Unit-Tests, Inegration-Tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Create Github Deployment
+        uses: chrnorm/deployment-action@v2
+        id: deployment
+        with:
+          token: '${{ secrets.GH_TOKEN }}'
+          environment: Preview
+
+      - name: Vercel setup
+        run: pnpm i vercel -g
+
+      - name: Link vercel project
+        run: pnpx vercel link --yes --project=blog-frontend --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Pull Vercel Environment Information
+        run: pnpx vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: pnpx vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        id: deploy
+        run: |
+          url=$(pnpx vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} | grep -Eo "https?://[a-zA-Z0-9.-]+\.vercel\.app" | tail -n1)
+          echo "preview_url=$url" >> $GITHUB_OUTPUT
+
+      - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ secrets.GH_TOKEN }}'
+          environment-url: ${{ steps.deploy.outputs.preview_url }}
+          state: 'success'
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ secrets.GH_TOKEN }}'
+          environment-url: ${{ steps.deploy.outputs.preview_url }}
+          state: 'failure'
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+
+  Add-Deployment-Summary:
+    needs: [Vercel-Deploy]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Add deployment URL to summary
+      run: 'echo "✅ Ephemeral deploy url: [${{ needs.Vercel-Deploy.outputs.preview_url }}](${{ needs.Vercel-Deploy.outputs.preview_url }})" >> $GITHUB_STEP_SUMMARY'
+
+  SonarQube-Report:
+    needs: [Vercel-Deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Download Unit tests coverage artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: unit-tests-coverage-data
+          path: coverage/unit
+      - name: Download Integration tests coverage artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: integration-tests-coverage-data
+          path: coverage/integration
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
