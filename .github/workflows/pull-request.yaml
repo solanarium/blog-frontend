@@ -29,6 +29,8 @@ jobs:
 
   Vercel-Deploy:
     runs-on: ubuntu-latest
+    permissions:
+      deployments: write
     outputs:
       preview_url: ${{ steps.deploy.outputs.preview_url }}
     needs: [Lint]
