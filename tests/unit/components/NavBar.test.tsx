@@ -1,40 +1,36 @@
-// import '@testing-library/jest-dom'
+import '@testing-library/jest-dom'
 
-// import { render } from '@testing-library/react'
-// import userEvent from '@testing-library/user-event'
-// import { MemoryRouter } from 'react-router-dom'
+import userEvent from '@testing-library/user-event'
+import { Route } from 'react-router-dom'
 
-// import { NavBar } from '../../../src/components/NavBar'
+import { NavBar } from '../../../src/components/NavBar'
 // import { useDispatch } from '../../../src/redux/store'
+import { render } from '../../../src/tests-support/render'
 // import { routes } from '../../../src/types/consts'
 
-// jest.mock('../../../src/redux/store')
-// jest.mock('react-router-dom')
+jest.mock('../../../src/redux/store')
 
-// describe('Unit | Components | NavBar', () => {
-//   beforeEach(() => {
-//     const useDispatchMock = jest.fn()
+describe('Unit | Components | NavBar', () => {
+  beforeEach(() => {
+    // const useDispatchMock = jest.fn()
+    // const dispatchMock = (useDispatch as jest.Mock).mockImplementation(
+    //   useDispatchMock,
+    // )
+  })
+  test('it renders', () => {
+    const screen = render(<NavBar>hllo</NavBar>)
 
-//     const dispatchMock = (useDispatch as jest.Mock).mockImplementation(
-//       useDispatchMock,
-//     )
-//   })
-//   test('it renders', () => {
-//     const screen = render(
-//       <MemoryRouter>
-//         <NavBar  />
-//       </MemoryRouter>,
-//     )
+    expect(screen.getByRole('link', { name: 'Main' }))
+    expect(screen.getByRole('link', { name: 'My posts' }))
+    expect(screen.getByRole('link', { name: 'Add a post' }))
+    expect(screen.getByRole('button', { name: 'Log Out' }))
+  })
 
-//     expect(screen.getByRole('link', { name: 'Main' }))
-//     expect(screen.getByRole('link', { name: 'My posts' }))
-//     expect(screen.getByRole('link', { name: 'Add a post' }))
-//     expect(screen.getByRole('button', { name: 'Log Out' }))
+  //   test('it redirect to link href', async () => {
+  //     const screen = render(<Route path="/" element={<NavBar />} />)
 
-//     test('it redirect to link href', async () => {
-//       await userEvent.click(screen.getByRole('link', { name: 'Main' }))
+  //     await userEvent.click(screen.getByRole('link', { name: 'Main' }))
 
-//       expect(redirectMock).toHaveBeenCalledWith(routes.auth.homePage)
-//     })
-//   })
-// })
+  //     // expect(redirectMock).toHaveBeenCalledWith(routes.auth.homePage)
+  //   })
+})
