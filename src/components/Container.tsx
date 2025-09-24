@@ -1,12 +1,7 @@
-import type { FC } from 'react'
-import { Outlet } from 'react-router-dom'
+import type { FC, PropsWithChildren } from 'react'
 
 import styles from './Container.module.css'
 
-export const Container: FC = () => {
-  return (
-    <div className={styles.container}>
-      <Outlet />
-    </div>
-  )
+export const Container: FC<PropsWithChildren> = ({ children }) => {
+  return <div className={styles.container}>{children}</div>
 }

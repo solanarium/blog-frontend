@@ -1,5 +1,5 @@
-import type { FC } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import type { FC, PropsWithChildren } from 'react'
+import { Link } from 'react-router-dom'
 
 import { logOut } from '../redux/features/auth/authSlice'
 import { useDispatch } from '../redux/store'
@@ -7,7 +7,7 @@ import { routes } from '../types/consts'
 import styles from './NavBar.module.css'
 import { Button } from './uikit/Button'
 
-export const NavBar: FC = () => {
+export const NavBar: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch()
 
   return (
@@ -16,14 +16,14 @@ export const NavBar: FC = () => {
         <button className={styles.home}>Main</button>
         <ul className={styles.list_container}>
           <li>
-            <a className={styles.link} href="/">
+            <Link to={routes.auth.homePage} className={styles.link}>
               Main
-            </a>
+            </Link>
           </li>
           <li>
-            <a className={styles.link} href="/">
+            <Link to="" className={styles.link}>
               My posts
-            </a>
+            </Link>
           </li>
           <li>
             <Link to={routes.auth.posts.create} className={styles.link}>
@@ -35,7 +35,7 @@ export const NavBar: FC = () => {
           Log Out
         </Button>
       </div>
-      <Outlet />
+      {children}
     </div>
   )
 }

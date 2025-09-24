@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Outlet, Route, Routes } from 'react-router-dom'
 
 import styles from './App.module.css'
 import { Background } from './components/Background'
@@ -44,15 +44,21 @@ export const App = () => {
             <Route path={routes.unAuth.login} element={<Login />} />
           </Route>
           <Route element={<ProtectedRoute />}>
-            <Route element={<NavBar />}>
-              <Route element={<Container />}>
-                <Route path={routes.auth.homePage} element={<MainPage />} />
+            <Route
+              element={
+                <NavBar>
+                  <Container>
+                    <Outlet />
+                  </Container>
+                </NavBar>
+              }
+            >
+              <Route path={routes.auth.homePage} element={<MainPage />} />
 
-                <Route
-                  path={routes.auth.posts.create}
-                  element={<AddPostPage />}
-                />
-              </Route>
+              <Route
+                path={routes.auth.posts.create}
+                element={<AddPostPage />}
+              />
             </Route>
           </Route>
         </Routes>
