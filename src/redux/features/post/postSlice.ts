@@ -1,16 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { createPost } from '../../../api/createPost'
+import type { Post } from '../../../types/models'
 
-export const createThunk = createAsyncThunk('posts/createPost', createPost)
+export const createPostThunk = createAsyncThunk('posts/createPost', createPost)
 
 interface PostState {
-  isLoading: boolean
-  posts: []
+  posts: Post[]
 }
 
 const initialState: PostState = {
-  isLoading: true,
   posts: [],
 }
 
@@ -18,4 +17,12 @@ export const postSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(createPostThunk.fulfilled, (state, action) => {
+      state.posts.push(action.payload.post)
+    })
+    builder.addCase(createPostThunk.rejected, () => {})
+  },
 })
+
+export default postSlice.reducer
