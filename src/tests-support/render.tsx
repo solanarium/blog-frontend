@@ -36,10 +36,11 @@ export const render = (children: ReactNode, options?: Options): Screen => {
   return {
     ...screen,
     getCurrentLocation: () => {
-      return JSON.parse(screen.getByTestId('location').textContent)
+      return JSON.parse(screen.getByTestId('location').textContent as string)
     },
     getCurrentPathname: () => {
-      return JSON.parse(screen.getByTestId('location').textContent).pathname
+      return JSON.parse(screen.getByTestId('location').textContent as string)
+        .pathname
     },
   }
 }
