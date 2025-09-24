@@ -85,7 +85,8 @@ export const AddPostPage: FC = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.title}
-            label="Title of text:"
+            label="Title of post"
+            placeholder="Title"
           />
           {errors.title && touched.title && (
             <p className={styles.error}>{errors.title}</p>
@@ -103,9 +104,14 @@ export const AddPostPage: FC = () => {
           )}
         </div>
         <div className={styles.buttons}>
-          <Button disabled={!isValid} variant="primary" type="submit">
+          <Button
+            className={styles.button_create}
+            disabled={!isValid || isSubmitting}
+            variant="primary"
+            type="submit"
+          >
             Create
-            {isSubmitting && <Loader />}
+            {isSubmitting && <Loader size={20} />}
           </Button>
           <LinkButton to={routes.auth.homePage} variant="cancel">
             Cancel

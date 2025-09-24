@@ -8,8 +8,8 @@ export type Screen = ReturnType<typeof renderTest> & {
 }
 
 interface Options {
-  routerProps: ComponentProps<typeof MemoryRouter>
-  renderOptions: Parameters<typeof renderTest>[1]
+  routerProps?: ComponentProps<typeof MemoryRouter>
+  renderOptions?: Parameters<typeof renderTest>[1]
 }
 
 type NoMethods<T> = {

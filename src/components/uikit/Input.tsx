@@ -1,4 +1,4 @@
-import type { ComponentProps, FC } from 'react'
+import { type ComponentProps, type FC, useId } from 'react'
 
 import { classNames } from '../../heplers/classNames'
 import styles from './Input.module.css'
@@ -8,10 +8,18 @@ type Props = {
 } & ComponentProps<'input'>
 
 export const Input: FC<Props> = ({ className, label, ...rest }) => {
+  const id = useId()
+
   return (
     <div>
-      <p className={styles.text}>{label}</p>
-      <input className={classNames(styles.input, className)} {...rest} />
+      <label htmlFor={id} className={styles.text}>
+        {label}
+      </label>
+      <input
+        id={id}
+        className={classNames(styles.input, className)}
+        {...rest}
+      />
     </div>
   )
 }
