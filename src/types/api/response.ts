@@ -1,4 +1,4 @@
-import type { User } from '../models'
+import type { Post, User } from '../models'
 
 export type RegisterResponse = {
   message: string
@@ -15,4 +15,9 @@ export type LoginResponse = {
 export type GetMeResponse = {
   token: string
   user: User
+}
+
+export type CreatePostResponse = {
+  post: Post
+  message: string
 }
