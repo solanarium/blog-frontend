@@ -4,7 +4,7 @@ import { MemoryRouter, useLocation } from 'react-router-dom'
 
 export type Screen = ReturnType<typeof renderTest> & {
   getCurrentLocation: () => NoMethods<Location>
-  getCurrentPathname: () => NoMethods<Location>
+  getCurrentPathname: () => string
 }
 
 interface Options {

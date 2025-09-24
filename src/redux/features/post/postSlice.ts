@@ -1,4 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
+import { createPost } from '../../../api/createPost'
+
+export const createThunk = createAsyncThunk('posts/createPost', createPost)
 
 interface PostState {
   isLoading: boolean
