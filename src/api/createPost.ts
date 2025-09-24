@@ -10,7 +10,7 @@ export const createPost = async ({
     method: 'POST',
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
-      // 'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       title,

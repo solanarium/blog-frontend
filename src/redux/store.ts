@@ -12,6 +12,7 @@ export const store = configureStore({
     authSlice,
     postSlice,
   },
+  devTools: true,
 })
 
 export const useSelector = <T>(cb: (state: RootState) => T) =>
