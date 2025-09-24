@@ -1,10 +1,9 @@
-import { render as renderTest } from '@testing-library/react'
+import { render as renderTest, waitFor } from '@testing-library/react'
 import type { ComponentProps, FC, ReactNode } from 'react'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 
 export type Screen = ReturnType<typeof renderTest> & {
-  getCurrentLocation: () => NoMethods<Location>
-  getCurrentPathname: () => string
+  expectPathname: (pathname: string) => void
 }
 
 interface Options {
@@ -12,10 +11,10 @@ interface Options {
   renderOptions: Parameters<typeof renderTest>[1]
 }
 
-type NoMethods<T> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [K in keyof T as T[K] extends (...args: any[]) => any ? never : K]: T[K]
-}
+// type NoMethods<T> = {
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   [K in keyof T as T[K] extends (...args: any[]) => any ? never : K]: T[K]
+// }
 
 // eslint-disable-next-line react-refresh/only-export-components
 const RouteInfo: FC = () => {
@@ -35,12 +34,13 @@ export const render = (children: ReactNode, options?: Options): Screen => {
 
   return {
     ...screen,
-    getCurrentLocation: () => {
-      return JSON.parse(screen.getByTestId('location').textContent as string)
-    },
-    getCurrentPathname: () => {
-      return JSON.parse(screen.getByTestId('location').textContent as string)
-        .pathname
+    expectPathname: async (pathname: string) => {
+      await waitFor(() => {
+        expect(
+          JSON.parse(screen.getByTestId('location').textContent as string)
+            .pathname,
+        ).toBe(pathname)
+      })
     },
   }
 }
