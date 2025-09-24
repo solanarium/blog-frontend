@@ -1,6 +1,6 @@
 .text_area {
   background-color: var(--gray-400);
-  color: var(--gray-600);
+  color: var(--black);
   width: 100%;
   overflow: hidden;
   border-radius: 8px;

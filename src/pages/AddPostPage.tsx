@@ -1,5 +1,6 @@
 import { useFormik } from 'formik'
 import { type FC, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { object, string } from 'yup'
 
@@ -9,42 +10,59 @@ import { Loader } from '../components/uikit/Loader'
 import { TextArea } from '../components/uikit/TextArea'
 import { createPostThunk } from '../redux/features/post/postSlice'
 import { useDispatch } from '../redux/store'
-import type { CreatePostResponse } from '../types/api/response'
 import { routes } from '../types/consts'
 import styles from './AddPostPage.module.css'
 
 export const AddPostPage: FC = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const { handleChange, handleSubmit, values, setFieldValue, isSubmitting } =
-    useFormik({
-      initialValues: {
-        title: '',
-        text: '',
-      },
-      validationSchema: object({
-        title: string().min(3),
-        text: string().min(10),
-      }),
-      onSubmit: ({ title, text }, { setSubmitting }) => {
-        setSubmitting(true)
-        dispatch(
-          createPostThunk({
-            title,
-            text,
-          }),
-        )
-          .then((res) => {
-            if (res.error) {
-              toast.error(res.error.message)
-            } else {
-              toast.success((res.payload as CreatePostResponse).message)
-            }
-          })
-          .finally(() => setSubmitting(false))
-      },
-    })
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    isSubmitting,
+    errors,
+    isValid,
+    touched,
+    handleBlur,
+  } = useFormik({
+    initialErrors: {
+      title: 'Title is required',
+      text: 'Text is required',
+    },
+    initialValues: {
+      title: '',
+      text: '',
+    },
+    validationSchema: object({
+      title: string()
+        .required('Title is required')
+        .min(3, 'Minimum 3 characters'),
+      text: string()
+        .required('Text is required')
+        .min(10, 'Minimum 10 characters'),
+    }),
+    onSubmit: ({ title, text }, { setSubmitting }) => {
+      setSubmitting(true)
+      dispatch(
+        createPostThunk({
+          title,
+          text,
+        }),
+      )
+        .unwrap()
+        .then((res) => {
+          toast.success(res.message)
+          navigate(routes.auth.homePage)
+        })
+        .catch((error) => {
+          toast.error(error.message)
+        })
+        .finally(() => setSubmitting(false))
+    },
+  })
 
   const clickInput = () => {
     if (inputRef.current !== null) {
@@ -61,21 +79,31 @@ export const AddPostPage: FC = () => {
             Add a photo:
           </button>
         </div>
-        <Input
-          name="title"
-          onChange={handleChange}
-          value={values.title}
-          label="Title of text:"
-        />
-        <TextArea
-          name="text"
-          onChange={(event) => {
-            setFieldValue('text', event.target.value)
-          }}
-          label="Text of post"
-        />
+        <div>
+          <Input
+            name="title"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.title}
+            label="Title of text:"
+          />
+          {errors.title && touched.title && (
+            <p className={styles.error}>{errors.title}</p>
+          )}
+        </div>
+        <div>
+          <TextArea
+            name="text"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            label="Text of post"
+          />
+          {errors.text && touched.text && (
+            <p className={styles.error}>{errors.text}</p>
+          )}
+        </div>
         <div className={styles.buttons}>
-          <Button variant="primary" type="submit">
+          <Button disabled={!isValid} variant="primary" type="submit">
             Create
             {isSubmitting && <Loader />}
           </Button>
