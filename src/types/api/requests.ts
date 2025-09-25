@@ -6,5 +6,5 @@ export interface RegisterVariables {
 export interface CreatePostVariables {
   title: string
   text: string
-  imageUrl?: string
+  image: File | null
 }
