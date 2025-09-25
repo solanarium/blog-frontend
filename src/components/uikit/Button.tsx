@@ -9,7 +9,7 @@ type Props = {
 } & ComponentProps<'button'>
 
 type LinkProps = {
-  variant: 'primary' | 'secondary'
+  variant: 'primary' | 'secondary' | 'danger'
 } & ComponentProps<typeof Link>
 
 export const Button: FC<Props> = ({ variant, className, ...rest }) => {

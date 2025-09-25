@@ -5,11 +5,14 @@ import {
 } from 'react-redux'
 
 import authSlice from './features/auth/authSlice'
+import postsSlice from './features/post/postsSlice'
 
 export const store = configureStore({
   reducer: {
-    authSlice,
+    auth: authSlice,
+    posts: postsSlice,
   },
+  devTools: true,
 })
 
 export const useSelector = <T>(cb: (state: RootState) => T) =>

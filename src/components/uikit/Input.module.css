@@ -5,10 +5,15 @@
   background-color: var(--gray-400);
   color: var(--black);
   border: none;
+  transition: outline 0.1s linear;
 }
 
 .text {
   color: var(--gray-400);
+}
+
+.input:hover {
+  outline: 2px solid var(--white);
 }
 
 input:focus {

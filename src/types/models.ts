@@ -9,3 +9,19 @@ export type User = BaseModel<{
   password: string
   posts: []
 }>
+
+export type Post = BaseModel<{
+  username: string
+  title: string
+  text: string
+  imageUrl: string
+  views: number
+  author: Author
+  comments: string[]
+}>
+
+export type Author = BaseModel<{
+  username: string
+  password: string
+  posts: string[]
+}>

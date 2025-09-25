@@ -1,0 +1,44 @@
+import userEvent from '@testing-library/user-event'
+
+import { NavBar } from '../../../src/components/NavBar'
+import { mockDispatch } from '../../../src/tests-support/mocks/helpers/mockDispatch'
+import { render } from '../../../src/tests-support/render'
+import { routes } from '../../../src/types/consts'
+
+jest.mock('../../../src/redux/store')
+
+describe('Unit | Components | NavBar', () => {
+  test('it renders', () => {
+    const screen = render(<NavBar>hllo</NavBar>)
+
+    expect(screen.getByRole('link', { name: 'Main' }))
+    expect(screen.getByRole('link', { name: 'My posts' }))
+    expect(screen.getByRole('link', { name: 'Add a post' }))
+    expect(screen.getByRole('button', { name: 'Log Out' }))
+  })
+
+  test('it redirect to link href', async () => {
+    const screen = render(<NavBar>Hello</NavBar>)
+
+    await userEvent.click(screen.getByRole('link', { name: 'Add a post' }))
+
+    await screen.expectPathname(routes.auth.posts.create)
+
+    await userEvent.click(screen.getByRole('link', { name: 'Main' }))
+
+    await screen.expectPathname(routes.auth.homePage)
+  })
+
+  test('it unlogined when clicked on button', async () => {
+    const dispatchMock = mockDispatch()
+
+    const screen = render(<NavBar>Hello</NavBar>)
+
+    await userEvent.click(screen.getByRole('button', { name: 'Log Out' }))
+
+    expect(dispatchMock).toHaveBeenCalledWith({
+      payload: undefined,
+      type: 'auth/logOut',
+    })
+  })
+})
