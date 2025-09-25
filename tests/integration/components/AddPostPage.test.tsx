@@ -3,20 +3,12 @@ import userEvent from '@testing-library/user-event'
 import { toast } from 'sonner'
 
 import { AddPostPage } from '../../../src/pages/AddPostPage'
-import { useDispatch } from '../../../src/redux/store'
 import { controlledPromise } from '../../../src/tests-support/controllerPromise'
+import { mockDispatch } from '../../../src/tests-support/mocks/helpers/mockDispatch'
 import { render, type Screen } from '../../../src/tests-support/render'
 import { routes } from '../../../src/types/consts'
 
 jest.mock('../../../src/redux/store')
-
-const mockDispatch = () => {
-  const dispatchMock = jest.fn()
-
-  ;(useDispatch as unknown as jest.Mock).mockImplementation(() => dispatchMock)
-
-  return dispatchMock
-}
 
 const fillForm = async (screen: Screen) => {
   await userEvent.type(screen.getByLabelText('Title of post'), 'hello')
@@ -27,7 +19,9 @@ const fillForm = async (screen: Screen) => {
 describe('Integration | Component | AddPostPage', () => {
   test('it renders', () => {
     mockDispatch()
-    const screen = render(<AddPostPage />)
+    const screen = render(<AddPostPage />, {
+      initialPathname: routes.auth.posts.create,
+    })
 
     expect(
       screen.getByRole('button', { name: 'Add a photo:' }),
@@ -44,9 +38,7 @@ describe('Integration | Component | AddPostPage', () => {
 
     const toastSuccessMock = jest.spyOn(toast, 'success')
     const screen = render(<AddPostPage />, {
-      routerProps: {
-        initialEntries: [routes.auth.posts.create],
-      },
+      initialPathname: routes.auth.posts.create,
     })
 
     expect(screen.getByRole('button', { name: 'Create' })).toBeDisabled()
@@ -77,9 +69,7 @@ describe('Integration | Component | AddPostPage', () => {
 
     const toastRejectMock = jest.spyOn(toast, 'error')
     const screen = render(<AddPostPage />, {
-      routerProps: {
-        initialEntries: [routes.auth.posts.create],
-      },
+      initialPathname: routes.auth.posts.create,
     })
 
     await fillForm(screen)
@@ -99,7 +89,9 @@ describe('Integration | Component | AddPostPage', () => {
         unwrap: () => promise,
       }
     })
-    const screen = render(<AddPostPage />)
+    const screen = render(<AddPostPage />, {
+      initialPathname: routes.auth.posts.create,
+    })
 
     await fillForm(screen)
 
@@ -120,7 +112,9 @@ describe('Integration | Component | AddPostPage', () => {
     expect(button).not.toBeDisabled()
   })
   test('it focused on input by click on button', async () => {
-    const screen = render(<AddPostPage />)
+    const screen = render(<AddPostPage />, {
+      initialPathname: routes.auth.posts.create,
+    })
 
     await userEvent.click(screen.getByRole('button', { name: 'Add a photo:' }))
 

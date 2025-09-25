@@ -1,10 +1,10 @@
 import type { GetMeResponse } from '../types/api/response'
 
-export const getMe = async (token: string): Promise<GetMeResponse> => {
+export const getMe = async (): Promise<GetMeResponse> => {
   const response = await fetch(' http://localhost:3002/api/auth/me', {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   })
 

@@ -5,12 +5,12 @@ import {
 } from 'react-redux'
 
 import authSlice from './features/auth/authSlice'
-import postSlice from './features/post/postSlice'
+import postsSlice from './features/post/postsSlice'
 
 export const store = configureStore({
   reducer: {
-    authSlice,
-    postSlice,
+    auth: authSlice,
+    posts: postsSlice,
   },
   devTools: true,
 })

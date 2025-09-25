@@ -20,12 +20,8 @@ export type Post = BaseModel<{
   comments: string[]
 }>
 
-export type Author = {
-  _id: string
+export type Author = BaseModel<{
   username: string
   password: string
   posts: string[]
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
+}>

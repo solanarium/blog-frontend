@@ -18,13 +18,13 @@ import { ProtectedRoute } from './wrappers/ProtectedRoute'
 
 export const App = () => {
   const dispatch = useDispatch()
-  const isLoading = useSelector((state) => state.authSlice.isLoading)
+  const isLoading = useSelector((state) => state.auth.isLoading)
 
   useEffect(() => {
     const token = window.localStorage.getItem('token')
 
     if (token) {
-      dispatch(getMeThunk(token))
+      dispatch(getMeThunk())
     } else {
       dispatch(logOut())
     }

@@ -2,6 +2,8 @@ import { render as renderTest, waitFor } from '@testing-library/react'
 import type { ComponentProps, FC, ReactNode } from 'react'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 
+import { routes } from '../types/consts'
+
 export type Screen = ReturnType<typeof renderTest> & {
   expectPathname: (pathname: string) => Promise<void>
 }
@@ -9,6 +11,7 @@ export type Screen = ReturnType<typeof renderTest> & {
 interface Options {
   routerProps?: ComponentProps<typeof MemoryRouter>
   renderOptions?: Parameters<typeof renderTest>[1]
+  initialPathname?: string
 }
 
 // type NoMethods<T> = {
@@ -25,7 +28,14 @@ const RouteInfo: FC = () => {
 
 export const render = (children: ReactNode, options?: Options): Screen => {
   const screen = renderTest(
-    <MemoryRouter initialEntries={['/']} {...(options?.routerProps || {})}>
+    <MemoryRouter
+      initialEntries={
+        options?.initialPathname
+          ? [options.initialPathname]
+          : [routes.auth.homePage]
+      }
+      {...(options?.routerProps || {})}
+    >
       <RouteInfo />
       {children}
     </MemoryRouter>,

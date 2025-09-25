@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 
 import { NavBar } from '../../../src/components/NavBar'
-import { useDispatch } from '../../../src/redux/store'
+import { mockDispatch } from '../../../src/tests-support/mocks/helpers/mockDispatch'
 import { render } from '../../../src/tests-support/render'
 import { routes } from '../../../src/types/consts'
 
@@ -30,9 +30,7 @@ describe('Unit | Components | NavBar', () => {
   })
 
   test('it unlogined when clicked on button', async () => {
-    const dispatchMock = jest.fn()
-
-    ;(useDispatch as jest.Mock).mockImplementation(() => dispatchMock)
+    const dispatchMock = mockDispatch()
 
     const screen = render(<NavBar>Hello</NavBar>)
 

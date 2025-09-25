@@ -8,7 +8,7 @@ import { Button, LinkButton } from '../components/uikit/Button'
 import { Input } from '../components/uikit/Input'
 import { Loader } from '../components/uikit/Loader'
 import { TextArea } from '../components/uikit/TextArea'
-import { createPostThunk } from '../redux/features/post/postSlice'
+import { createPostThunk } from '../redux/features/post/postsSlice'
 import { useDispatch } from '../redux/store'
 import { routes } from '../types/consts'
 import styles from './AddPostPage.module.css'
@@ -118,7 +118,7 @@ export const AddPostPage: FC = () => {
             Create
             {isSubmitting && <Loader size={20} />}
           </Button>
-          <LinkButton to={routes.auth.homePage} variant="cancel">
+          <LinkButton to={routes.auth.homePage} variant="danger">
             Cancel
           </LinkButton>
         </div>
