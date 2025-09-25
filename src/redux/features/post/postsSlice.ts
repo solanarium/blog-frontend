@@ -5,11 +5,11 @@ import type { Post } from '../../../types/models'
 
 export const createPostThunk = createAsyncThunk('posts/createPost', createPost)
 
-interface PostState {
+interface PostsState {
   posts: Post[]
 }
 
-const initialState: PostState = {
+const initialState: PostsState = {
   posts: [],
 }
 
