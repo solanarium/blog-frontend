@@ -3,7 +3,7 @@ import type { ComponentProps, FC, ReactNode } from 'react'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 
 export type Screen = ReturnType<typeof renderTest> & {
-  expectPathname: (pathname: string) => void
+  expectPathname: (pathname: string) => Promise<void>
 }
 
 interface Options {

@@ -74,7 +74,12 @@ export const AddPostPage: FC = () => {
     <form onSubmit={handleSubmit}>
       <div className={styles.card}>
         <div>
-          <input ref={inputRef} type="file" className={styles.input} />
+          <input
+            aria-label="photo"
+            ref={inputRef}
+            type="file"
+            className={styles.input}
+          />
           <button onClick={clickInput} className={styles.button_input}>
             Add a photo:
           </button>

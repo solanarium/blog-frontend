@@ -1,8 +1,10 @@
+import { waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { toast } from 'sonner'
 
 import { AddPostPage } from '../../../src/pages/AddPostPage'
 import { useDispatch } from '../../../src/redux/store'
+import { controlledPromise } from '../../../src/tests-support/controllerPromise'
 import { render, type Screen } from '../../../src/tests-support/render'
 import { routes } from '../../../src/types/consts'
 
@@ -32,11 +34,6 @@ describe('Integration | Component | AddPostPage', () => {
     ).toBeInTheDocument()
   })
   test('it submits', async () => {
-    // const navigateMock = jest.fn()
-
-    // ;(useNavigate as unknown as jest.Mock).mockImplementation(
-    //   () => navigateMock,
-    // )
     const dispatchMock = mockDispatch()
 
     dispatchMock.mockImplementation(() => {
@@ -64,16 +61,75 @@ describe('Integration | Component | AddPostPage', () => {
 
     screen.debug()
 
-    // expect(screen.getCurrentPathname()).toBe(routes.auth.homePage)
+    await screen.expectPathname(routes.auth.homePage)
 
-    expect(toastSuccessMock).toHaveBeenCalledWith()
+    expect(toastSuccessMock).toHaveBeenCalledWith('Post created successful')
   })
 
-  // test('it render loader when submitting', async () => {
-  //   const screen = render(<AddPostPage />)
+  test('it rejects', async () => {
+    const dispatchMock = mockDispatch()
 
-  //   await fillForm(screen)
+    dispatchMock.mockImplementation(() => {
+      return {
+        unwrap: () => Promise.reject({ message: 'Internal server error' }),
+      }
+    })
 
-  //   await userEvent.click(screen.getByRole('button', { name: 'Create' }))
-  // })
+    const toastRejectMock = jest.spyOn(toast, 'error')
+    const screen = render(<AddPostPage />, {
+      routerProps: {
+        initialEntries: [routes.auth.posts.create],
+      },
+    })
+
+    await fillForm(screen)
+
+    await userEvent.click(screen.getByRole('button', { name: 'Create' }))
+
+    expect(toastRejectMock).toHaveBeenCalledWith('Internal server error')
+  })
+
+  test('it renders loader when submitting', async () => {
+    const dispatch = mockDispatch()
+
+    const { promise, resolve } = controlledPromise()
+
+    dispatch.mockImplementation(() => {
+      return {
+        unwrap: () => promise,
+      }
+    })
+    const screen = render(<AddPostPage />)
+
+    await fillForm(screen)
+
+    const button = screen.getByRole('button', { name: 'Create' })
+
+    await userEvent.click(button)
+
+    expect(button.querySelector('.lucide-loader-circle')).toBeInTheDocument()
+
+    expect(button).toBeDisabled()
+
+    resolve({ message: 'Post created' })
+
+    await waitFor(() => {
+      expect(button.querySelector('.lucide-loader-circle'))
+    })
+
+    expect(button).not.toBeDisabled()
+  })
+  test('it focused on input by click on button', async () => {
+    const screen = render(<AddPostPage />)
+
+    await userEvent.click(screen.getByRole('button', { name: 'Add a photo:' }))
+
+    const input = screen.getByLabelText('photo')
+
+    input.onclick = jest.fn()
+
+    await userEvent.click(input)
+
+    expect(input.onclick).toHaveBeenCalled()
+  })
 })

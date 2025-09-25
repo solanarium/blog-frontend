@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { NavBar } from '../../../src/components/NavBar'
 import { useDispatch } from '../../../src/redux/store'
 import { render } from '../../../src/tests-support/render'
+import { routes } from '../../../src/types/consts'
 
 jest.mock('../../../src/redux/store')
 
@@ -21,11 +22,11 @@ describe('Unit | Components | NavBar', () => {
 
     await userEvent.click(screen.getByRole('link', { name: 'Add a post' }))
 
-    expect(screen.getCurrentPathname()).toBe('/posts/create')
+    await screen.expectPathname(routes.auth.posts.create)
 
     await userEvent.click(screen.getByRole('link', { name: 'Main' }))
 
-    expect(screen.getCurrentPathname()).toBe('/')
+    await screen.expectPathname(routes.auth.homePage)
   })
 
   test('it unlogined when clicked on button', async () => {
