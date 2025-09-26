@@ -80,9 +80,9 @@ export const AddPostPage: FC = () => {
         <div>
           <input
             onChange={(event) => {
-              if (event.target.files) {
-                if (event.target.files[0] && event.target.files) {
-                  setFieldValue('image', event.target.files[0])
+              if (event.currentTarget.files) {
+                if (event.currentTarget.files[0]) {
+                  setFieldValue('image', event.currentTarget.files[0])
                 }
               }
             }}

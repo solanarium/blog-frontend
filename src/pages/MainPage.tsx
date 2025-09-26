@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
+import { PostCard } from '../components/PostCard'
 import { PageLoader } from '../components/uikit/PageLoader'
 import { getPostThunk } from '../redux/features/post/postsSlice'
 import { useDispatch, useSelector } from '../redux/store'
+import styles from './MainPage.module.css'
 
 export const MainPage = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -25,14 +27,9 @@ export const MainPage = () => {
   return isLoading ? (
     <PageLoader />
   ) : (
-    <div>
+    <div className={styles.posts_container}>
       {posts.map((post) => {
-        return (
-          <div key={post._id}>
-            <h3>{post.title}</h3>
-            {post.imageUrl && <img src={post.imageUrl} alt={post.title} />}
-          </div>
-        )
+        return <PostCard key={post._id} post={post} />
       })}
     </div>
   )

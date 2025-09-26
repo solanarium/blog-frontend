@@ -7,17 +7,20 @@ export const createPost = async ({
   text,
   image,
 }: CreatePostVariables): Promise<CreatedPostResponse> => {
+  const formData = new FormData()
+
+  formData.append('title', title)
+  formData.append('text', text)
+  if (image) {
+    formData.append('image', image)
+  }
   const response = await fetch('http://localhost:3002/api/posts', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'multipart/form-data',
     },
-    body: JSON.stringify({
-      title,
-      text,
-      image,
-    }),
+    body: formData,
   })
 
   return toJson(response)
