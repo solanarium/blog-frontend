@@ -51,8 +51,6 @@ describe('Integration | Component | AddPostPage', () => {
 
     expect(dispatchMock).toHaveBeenCalled()
 
-    screen.debug()
-
     await screen.expectPathname(routes.auth.homePage)
 
     expect(toastSuccessMock).toHaveBeenCalledWith('Post created successful')

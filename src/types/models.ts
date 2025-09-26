@@ -14,7 +14,7 @@ export type Post = BaseModel<{
   username: string
   title: string
   text: string
-  image: string
+  imageUrl: string | null
   views: number
   author: Author
   comments: string[]

@@ -1,3 +1,4 @@
+import { toJson } from '../heplers/toJson'
 import type { RegisterVariables } from '../types/api/requests'
 import type { LoginResponse } from '../types/api/response'
 
@@ -12,9 +13,5 @@ export const login = async (
     body: JSON.stringify(variables),
   })
 
-  if (response.ok) {
-    return response.json()
-  } else {
-    throw new Error((await response.json()).message)
-  }
+  return toJson(response)
 }

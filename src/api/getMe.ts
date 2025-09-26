@@ -1,3 +1,4 @@
+import { toJson } from '../heplers/toJson'
 import type { GetMeResponse } from '../types/api/response'
 
 export const getMe = async (): Promise<GetMeResponse> => {
@@ -8,11 +9,5 @@ export const getMe = async (): Promise<GetMeResponse> => {
     },
   })
 
-  if (response.ok) {
-    return response.json()
-  } else {
-    const error = await response.json()
-
-    throw new Error(error.message)
-  }
+  return toJson(response)
 }

@@ -1,3 +1,4 @@
+import { toJson } from '../heplers/toJson'
 import type { CreatePostVariables } from '../types/api/requests'
 import type { CreatedPostResponse } from '../types/api/response'
 
@@ -19,11 +20,5 @@ export const createPost = async ({
     }),
   })
 
-  if (response.ok) {
-    return response.json()
-  } else {
-    const error = await response.json()
-
-    throw new Error(error.message)
-  }
+  return toJson(response)
 }

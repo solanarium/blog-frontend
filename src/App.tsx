@@ -1,11 +1,10 @@
 import { useEffect } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
 
-import styles from './App.module.css'
 import { Background } from './components/Background'
 import { Container } from './components/Container'
 import { NavBar } from './components/NavBar'
-import { Loader } from './components/uikit/Loader'
+import { PageLoader } from './components/uikit/PageLoader'
 import { AddPostPage } from './pages/AddPostPage'
 import { Login } from './pages/Login'
 import { MainPage } from './pages/MainPage'
@@ -33,7 +32,7 @@ export const App = () => {
   return (
     <Background>
       {isLoading ? (
-        <Loader size={40} className={styles.loader} />
+        <PageLoader />
       ) : (
         <Routes>
           <Route element={<AuthenticatedRoute />}>
