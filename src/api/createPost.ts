@@ -14,13 +14,16 @@ export const createPost = async ({
   if (image) {
     formData.append('image', image)
   }
-  const response = await fetch('http://localhost:3002/api/posts', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/api/posts`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: formData,
     },
-    body: formData,
-  })
+  )
 
   return toJson(response)
 }

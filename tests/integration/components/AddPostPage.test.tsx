@@ -9,6 +9,12 @@ import { render, type Screen } from '../../../src/tests-support/render'
 import { routes } from '../../../src/types/consts'
 
 jest.mock('../../../src/redux/store')
+jest.mock('../../../src/api/createPost', () => ({
+  createPost: jest.fn(() => Promise.resolve({ message: 'ok' })),
+}))
+jest.mock('../../../src/api/getPost', () => ({
+  createPost: jest.fn(() => Promise.resolve({ message: 'ok' })),
+}))
 
 const fillForm = async (screen: Screen) => {
   await userEvent.type(screen.getByLabelText('Title of post'), 'hello')

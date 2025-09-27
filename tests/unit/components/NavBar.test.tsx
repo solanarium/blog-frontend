@@ -6,6 +6,15 @@ import { render } from '../../../src/tests-support/render'
 import { routes } from '../../../src/types/consts'
 
 jest.mock('../../../src/redux/store')
+jest.mock('../../../src/redux/features/auth/authSlice', () => ({
+  getMe: jest.fn(),
+  login: jest.fn(),
+  register: jest.fn(),
+}))
+jest.mock('../../../src/redux/features/post/postsSlice', () => ({
+  createPost: jest.fn(),
+  getPosts: jest.fn(),
+}))
 
 describe('Unit | Components | NavBar', () => {
   test('it renders', () => {
