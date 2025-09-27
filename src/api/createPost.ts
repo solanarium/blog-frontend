@@ -1,12 +1,12 @@
 import { toJson } from '../heplers/toJson'
 import type { CreatePostVariables } from '../types/api/requests'
-import type { CreatedPostResponse } from '../types/api/response'
+import type { CreatePostResponse } from '../types/api/response'
 
 export const createPost = async ({
   title,
   text,
   image,
-}: CreatePostVariables): Promise<CreatedPostResponse> => {
+}: CreatePostVariables): Promise<CreatePostResponse> => {
   const formData = new FormData()
 
   formData.append('title', title)
@@ -18,7 +18,6 @@ export const createPost = async ({
     method: 'POST',
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
-      // 'Content-Type': 'multipart/form-data',
     },
     body: formData,
   })

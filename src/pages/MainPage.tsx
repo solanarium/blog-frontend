@@ -24,9 +24,11 @@ export const MainPage = () => {
       })
   }, [dispatch])
 
-  return isLoading ? (
-    <PageLoader />
-  ) : (
+  if (isLoading) {
+    return <PageLoader />
+  }
+
+  return (
     <div className={styles.posts_container}>
       {posts.map((post) => {
         return <PostCard key={post._id} post={post} />

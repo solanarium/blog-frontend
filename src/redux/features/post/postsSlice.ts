@@ -30,7 +30,6 @@ export const postsSlice = createSlice({
     builder.addCase(getPostThunk.rejected, (state) => {
       state.posts = []
     })
-    builder.addCase(createPostThunk.rejected, () => {})
   },
 })
 

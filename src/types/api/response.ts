@@ -17,7 +17,7 @@ export type GetMeResponse = {
   user: User
 }
 
-export type CreatedPostResponse = {
+export type CreatePostResponse = {
   post: Post
   message: string
 }

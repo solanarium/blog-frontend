@@ -10,24 +10,13 @@ import { Button } from './uikit/Button'
 export const NavBar: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch()
 
-  const handleMain = () => {
-    window.scrollBy(0, 0)
-    window.location.reload()
-  }
-
   return (
     <div>
       <div className={styles.container}>
-        <button onClick={handleMain} className={styles.home}>
-          Main
-        </button>
+        <button className={styles.home}>Main</button>
         <ul className={styles.list_container}>
           <li>
-            <Link
-              onClick={handleMain}
-              to={routes.auth.homePage}
-              className={styles.link}
-            >
+            <Link to={routes.auth.homePage} className={styles.link}>
               Main
             </Link>
           </li>
