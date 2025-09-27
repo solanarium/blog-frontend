@@ -1,29 +1,29 @@
+import { toJson } from '../heplers/toJson'
 import type { CreatePostVariables } from '../types/api/requests'
 import type { CreatePostResponse } from '../types/api/response'
 
 export const createPost = async ({
   title,
   text,
-  imageUrl,
+  image,
 }: CreatePostVariables): Promise<CreatePostResponse> => {
-  const response = await fetch('http://localhost:3002/api/posts', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      title,
-      text,
-      imageUrl,
-    }),
-  })
+  const formData = new FormData()
 
-  if (response.ok) {
-    return response.json()
-  } else {
-    const error = await response.json()
-
-    throw new Error(error.message)
+  formData.append('title', title)
+  formData.append('text', text)
+  if (image) {
+    formData.append('image', image)
   }
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/api/posts`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: formData,
+    },
+  )
+
+  return toJson(response)
 }

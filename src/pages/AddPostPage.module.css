@@ -43,3 +43,39 @@
   align-items: center;
   gap: 4px;
 }
+
+.post_image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.image_button {
+  background: none;
+  cursor: pointer;
+  border: none;
+  position: relative;
+}
+
+.update_photo {
+  background-color: #0000004d;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+  font-size: 18px;
+  border-radius: 12px;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.image_button:hover .update_photo {
+  opacity: 1;
+}

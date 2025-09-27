@@ -10,6 +10,7 @@ import { Loader } from '../components/uikit/Loader'
 import { TextArea } from '../components/uikit/TextArea'
 import { createPostThunk } from '../redux/features/post/postsSlice'
 import { useDispatch } from '../redux/store'
+import type { CreatePostVariables } from '../types/api/requests'
 import { routes } from '../types/consts'
 import styles from './AddPostPage.module.css'
 
@@ -27,7 +28,8 @@ export const AddPostPage: FC = () => {
     isValid,
     touched,
     handleBlur,
-  } = useFormik({
+    setFieldValue,
+  } = useFormik<CreatePostVariables>({
     initialErrors: {
       title: 'Title is required',
       text: 'Text is required',
@@ -35,6 +37,7 @@ export const AddPostPage: FC = () => {
     initialValues: {
       title: '',
       text: '',
+      image: null,
     },
     validationSchema: object({
       title: string()
@@ -44,12 +47,13 @@ export const AddPostPage: FC = () => {
         .required('Text is required')
         .min(10, 'Minimum 10 characters'),
     }),
-    onSubmit: ({ title, text }, { setSubmitting }) => {
+    onSubmit: ({ title, text, image }, { setSubmitting }) => {
       setSubmitting(true)
       dispatch(
         createPostThunk({
           title,
           text,
+          image,
         }),
       )
         .unwrap()
@@ -75,14 +79,41 @@ export const AddPostPage: FC = () => {
       <div className={styles.card}>
         <div>
           <input
+            onChange={(event) => {
+              if (event.currentTarget.files) {
+                if (event.currentTarget.files[0]) {
+                  setFieldValue('image', event.currentTarget.files[0])
+                }
+              }
+            }}
+            accept="image/*"
             aria-label="photo"
             ref={inputRef}
             type="file"
             className={styles.input}
           />
-          <button onClick={clickInput} className={styles.button_input}>
-            Add a photo:
-          </button>
+          {values.image ? (
+            <button
+              type="button"
+              className={styles.image_button}
+              onClick={clickInput}
+            >
+              <img
+                className={styles.post_image}
+                src={URL.createObjectURL(values.image)}
+                alt="image"
+              />
+              <div className={styles.update_photo}>Update photo</div>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={clickInput}
+              className={styles.button_input}
+            >
+              Add a photo:
+            </button>
+          )}
         </div>
         <div>
           <Input

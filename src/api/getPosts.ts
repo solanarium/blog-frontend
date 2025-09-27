@@ -1,11 +1,10 @@
 import { toJson } from '../heplers/toJson'
-import type { GetMeResponse } from '../types/api/response'
+import type { Post } from '../types/models'
 
-export const getMe = async (): Promise<GetMeResponse> => {
+export const getPosts = async (): Promise<Array<Post>> => {
   const response = await fetch(
-    `${import.meta.env.VITE_BACKEND_URL}/api/auth/me`,
+    `${import.meta.env.VITE_BACKEND_URL}/api/posts`,
     {
-      method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
