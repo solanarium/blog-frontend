@@ -1,0 +1,27 @@
+.icons {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 12px;
+  color: var(--gray-400);
+}
+
+.icon {
+  height: 16px;
+  width: 16px;
+}
+
+.actions {
+  background: none;
+  border: none;
+  color: var(--gray-400);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  gap: 4px;
+}
+
+.actions:hover {
+  color: var(--white);
+}

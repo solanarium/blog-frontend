@@ -23,8 +23,7 @@ const initialState: InitialState = {
   isLoading: true,
   isLogined: false,
 }
-
-export const authSlice = createSlice({
+const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {

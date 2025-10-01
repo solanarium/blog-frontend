@@ -1,7 +1,7 @@
 .container {
   display: flex;
   justify-content: space-between;
-  padding: 12px 0;
+  padding: 12px 32px;
   position: sticky;
   top: 0;
   background: linear-gradient(to right, #243855, #141e30);

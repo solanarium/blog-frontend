@@ -10,6 +10,7 @@ type Props = {
 
 type LinkProps = {
   variant: 'primary' | 'secondary' | 'danger'
+  className?: string
 } & ComponentProps<typeof Link>
 
 export const Button: FC<Props> = ({ variant, className, ...rest }) => {
@@ -21,8 +22,11 @@ export const Button: FC<Props> = ({ variant, className, ...rest }) => {
   )
 }
 
-export const LinkButton: FC<LinkProps> = ({ variant, ...rest }) => {
+export const LinkButton: FC<LinkProps> = ({ variant, className, ...rest }) => {
   return (
-    <Link className={classNames(styles.button, styles[variant])} {...rest} />
+    <Link
+      className={classNames(styles.button, styles[variant], className)}
+      {...rest}
+    />
   )
 }
