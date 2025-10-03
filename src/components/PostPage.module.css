@@ -24,12 +24,8 @@
   width: fit-content;
 }
 
-.comments {
-  background-color: var(--gray-400);
-}
-
 .content {
   display: grid;
-  grid-template-columns: 7fr 3fr;
+  grid-template-columns: 7fr 4fr;
   gap: 12px;
 }

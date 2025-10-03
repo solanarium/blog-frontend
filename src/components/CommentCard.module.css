@@ -1,0 +1,17 @@
+.container {
+  padding: 8px;
+  background-color: var(--gray-700);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.comment_input {
+  flex-grow: 1;
+}
+
+.button_send:disabled {
+  opacity: 0.5;
+}

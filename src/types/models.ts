@@ -6,8 +6,8 @@ export type BaseModel<T> = {
 
 export type User = BaseModel<{
   username: string
-  password: string
-  posts: []
+  posts: string[]
+  comments: string[]
 }>
 
 export type Post = BaseModel<{
@@ -22,6 +22,11 @@ export type Post = BaseModel<{
 
 export type Author = BaseModel<{
   username: string
-  password: string
   posts: string[]
+  comments: string[]
 }>
+
+export type Comment = {
+  text: string
+  author: Author
+}
