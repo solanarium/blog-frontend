@@ -21,7 +21,7 @@ export const PostCard: FC<Props> = ({ post }) => {
       to={routes.auth.posts.index + `/${post._id}`}
       className={styles.post_card}
     >
-      <Image image={post.imageUrl} title={post.title} />
+      {post.imageUrl && <Image image={post.imageUrl} title={post.title} />}
 
       <div className={styles.user_data}>
         <Text variant="xs">{post.username}</Text>

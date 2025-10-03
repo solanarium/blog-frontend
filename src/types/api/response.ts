@@ -1,4 +1,4 @@
-import type { Post, User } from '../models'
+import type { Comment, Post, User } from '../models'
 
 export type RegisterResponse = {
   message: string
@@ -19,5 +19,10 @@ export type GetMeResponse = {
 
 export type CreatePostResponse = {
   post: Post
+  message: string
+}
+
+export type CreatedCommentResponse = {
+  comment: Comment
   message: string
 }

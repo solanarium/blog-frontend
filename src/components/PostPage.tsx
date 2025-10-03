@@ -4,6 +4,7 @@ import { Navigate, useParams } from 'react-router-dom'
 import { getPostByIdThunk } from '../redux/features/post/onePostSlice'
 import { useDispatch, useSelector } from '../redux/store'
 import { routes } from '../types/consts'
+import { CommentCard } from './CommentCard'
 import styles from './PostPage.module.css'
 import { LinkButton } from './uikit/Button'
 import { Image } from './uikit/Image'
@@ -48,11 +49,14 @@ export const PostPage: FC = () => {
       </LinkButton>
       <div className={styles.content}>
         <div className={styles.image_block}>
-          <Image
-            className={styles.image}
-            image={post.imageUrl}
-            title={post.title}
-          />
+          {post.imageUrl && (
+            <Image
+              className={styles.image}
+              image={post.imageUrl}
+              title={post.title}
+            />
+          )}
+
           <div className={styles.user_data}>
             <Text variant="xs">{post.username}</Text>
             <Text variant="xs">{datePost}</Text>
@@ -61,9 +65,7 @@ export const PostPage: FC = () => {
           <Text variant="s">{post.text}</Text>
           <Statistic post={post} />
         </div>
-        <div className={styles.comments}>
-          <h2>Comments</h2>
-        </div>
+        <CommentCard />
       </div>
     </div>
   )
