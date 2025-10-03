@@ -9,7 +9,7 @@ type Props = {
 export const AuthCard: FC<Props> = ({ title, children }) => {
   return (
     <div className={styles.container}>
-      <div className={styles.registration_card}>
+      <div className={styles.card}>
         <p className={styles.title}>{title}</p>
         {children}
       </div>

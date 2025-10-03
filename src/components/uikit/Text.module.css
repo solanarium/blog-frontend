@@ -1,0 +1,14 @@
+.xs {
+  color: var(--gray-400);
+  font-size: 12px;
+}
+
+.s {
+  color: var(--gray-400);
+  font-size: 14px;
+}
+
+.m {
+  color: var(--white);
+  font-size: 26px;
+}

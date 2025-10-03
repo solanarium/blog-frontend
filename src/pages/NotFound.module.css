@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  white-space: nowrap;
+  height: 100vh;
+  font-size: 18px;
+  color: var(--white);
+  gap: 12px;
+}
+
+.title {
+  font-size: 80px;
+  line-height: 100%;
+}
+
+.text {
+  color: var(--gray-400);
+}

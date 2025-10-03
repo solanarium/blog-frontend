@@ -1,8 +1,13 @@
-import { Eye, MessageCircleMore } from 'lucide-react'
-import type { FC } from 'react'
+import { type FC } from 'react'
+import { Link } from 'react-router-dom'
 
+import { routes } from '../types/consts'
 import type { Post } from '../types/models'
+import { LineClamp } from './LineClamp'
 import styles from './PostCard.module.css'
+import { Image } from './uikit/Image'
+import { Statistic } from './uikit/Statistic'
+import { Text } from './uikit/Text'
 
 interface Props {
   post: Post
@@ -12,28 +17,23 @@ export const PostCard: FC<Props> = ({ post }) => {
   const datePost = new Date(post.createdAt).toLocaleDateString()
 
   return (
-    <div className={styles.post_card}>
-      {post.imageUrl && (
-        <img className={styles.image} src={post.imageUrl} alt={post.title} />
-      )}
-      <div className={styles.data}>
-        <div>{post.username}</div>
-        <div>{datePost}</div>
+    <Link
+      to={routes.auth.posts.index + `/${post._id}`}
+      className={styles.post_card}
+    >
+      <Image image={post.imageUrl} title={post.title} />
+
+      <div className={styles.user_data}>
+        <Text variant="xs">{post.username}</Text>
+        <Text variant="xs">{datePost}</Text>
       </div>
       <div>
-        <h3 className={styles.title}>{post.title}</h3>
-        <p className={styles.text}>{post.text}</p>
+        <Text variant="m">{post.title}</Text>
+        <LineClamp lines={3}>
+          <Text variant="s">{post.text}</Text>
+        </LineClamp>
       </div>
-      <div className={styles.icons}>
-        <button className={styles.actions}>
-          <Eye className={styles.icon} />
-          <p>{post.views}</p>
-        </button>
-        <button className={styles.actions}>
-          <MessageCircleMore name="comment" className={styles.icon} />
-          <p>{post.comments.length}</p>
-        </button>
-      </div>
-    </div>
+      <Statistic post={post} />
+    </Link>
   )
 }

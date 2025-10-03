@@ -1,6 +1,7 @@
 import { toJson } from '../heplers/toJson'
 import type { CreatePostVariables } from '../types/api/requests'
 import type { CreatePostResponse } from '../types/api/response'
+import { api } from './api'
 
 export const createPost = async ({
   title,
@@ -14,16 +15,12 @@ export const createPost = async ({
   if (image) {
     formData.append('image', image)
   }
-  const response = await fetch(
-    `${import.meta.env.VITE_BACKEND_URL}/api/posts`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: formData,
+  const response = await api.post('/posts', {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
-  )
+    body: formData,
+  })
 
   return toJson(response)
 }

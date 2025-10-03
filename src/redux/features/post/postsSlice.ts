@@ -16,7 +16,7 @@ const initialState: PostsState = {
   posts: [],
 }
 
-export const postsSlice = createSlice({
+const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {},
